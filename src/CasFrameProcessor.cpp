@@ -94,7 +94,8 @@ auto CasFrameProcessor::process(uint32_t tti) -> bool {
   }
 
   _rest._pdsch.total++;
-
+  // In rel-16 the CFI can be indicated by the MIB carrie by the PBCH, if the CFI is not zero, the receiver don't have to decode the PFICH.
+  _sf_cfg.cfi = _cell.cfi;
   // Run the FFT and do channel estimation
   if (srslte_ue_dl_decode_fft_estimate(&_ue_dl, &_sf_cfg, &_ue_dl_cfg) < 0) {
     _rest._pdsch.errors++;
